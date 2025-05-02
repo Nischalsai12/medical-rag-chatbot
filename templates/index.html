@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WHO Medical RAG Chatbot</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f9; }
+        h1 { color: #333; text-align: center; }
+        .chat-container { max-width: 800px; margin: auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .input-box { width: 100%; padding: 10px; margin-bottom: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px; }
+        .submit-btn { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .submit-btn:hover { background: #0056b3; }
+        .response-area { margin-top: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 4px; }
+        .faq-item { margin: 10px 0; padding: 10px; background: #f9f9f9; border-radius: 4px; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Healthcare & Medical Knowledge RAG Chatbot</h1>
+    <div class="chat-container">
+        <!-- Model Selection Dropdown -->
+        <label for="modelSelect">Select Model:</label>
+        <select id="modelSelect" class="input-box">
+            <option value="distilbert/distilgpt2">DistilGPT-2</option>
+            <option value="mistralai/Mistral-7B-Instruct-v0.2">Mistral 7B</option>
+            <option value="meta-llama/Meta-Llama-3-8B-Instruct">LLaMA 3</option>
+            <option value="microsoft/phi-2">Phi-2</option>
+        </select>
+
+        <!-- Query Input -->
+        <input type="text" id="queryInput" class="input-box" placeholder="Enter your medical query">
+        
+        <!-- Submit Button -->
+        <button class="submit-btn" onclick="submitQuery()">Submit</button>
+
+        <!-- Response Area -->
+        <div id="responseArea" class="response-area"></div>
+    </div>
+
+    <script>
+        async function submitQuery() {
+            const queryInput = document.getElementById('queryInput');
+            const modelSelect = document.getElementById('modelSelect');
+            const responseArea = document.getElementById('responseArea');
+            
+            const query = queryInput.value.trim();
+            const modelName = modelSelect.value;  // Get the selected model
+
+            if (!query) {
+                responseArea.innerHTML = `<p class="error">Please enter a query.</p>`;
+                return;
+            }
+
+            responseArea.innerHTML = `<p>Loading...</p>`;
+
+            try {
+                const response = await fetch('/query', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query, model: modelName })
+                });
+                const data = await response.json();
+
+                if (data.error) {
+                    responseArea.innerHTML = `<p class="error">Error: ${data.error}</p>`;
+                    return;
+                }
+
+                let html = `<h3>Query: ${data.query}</h3>`;
+                html += `<p><strong>Response:</strong> ${data.response}</p>`;
+                html += `<h4>Relevant FAQs:</h4>`;
+                data.relevant_faqs.forEach(faq => {
+                    html += `<div class="faq-item">
+                        <p><strong>Q:</strong> ${faq.question}</p>
+                        <p><strong>A:</strong> ${faq.answer}</p>
+                        <p><strong>Similarity:</strong> ${(faq.similarity * 100).toFixed(2)}%</p>
+                    </div>`;
+                });
+                html += `<h4>Evaluation:</h4>`;
+                html += `<p>Length: ${data.evaluation.length} characters</p>`;
+                html += `<p>Word Count: ${data.evaluation.word_count}</p>`;
+                html += `<h4>Memory Stats:</h4>`;
+                for (const [key, value] of Object.entries(data.memory_stats)) {
+                    html += `<p>${key}: ${value}</p>`;
+                }
+                
+
+                responseArea.innerHTML = html;
+            } catch (error) {
+                responseArea.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+            }
+        }
+
+        // Allow Enter key to submit query
+        document.getElementById('queryInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                submitQuery();
+            }
+        });
+    </script>
+</body>
+</html>
