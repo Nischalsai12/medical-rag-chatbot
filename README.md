@@ -142,22 +142,7 @@ Solution: Check if the FAQ dataset is up-to-date and contains relevant entries. 
 
 Project Structure
 
-WHO-Medical-RAG-Chatbot/
-├── app.py                # Flask app for running the web interface
-├── chatbot.py            # Core chatbot functionality
-├── requirements.txt      # List of dependencies
-├── data/
-│   ├── faq_data.csv      # FAQ dataset
-│   ├── faq_embeddings/   # Preprocessed FAQ embeddings
-├── templates/
-│   ├── index.html        # Web interface HTML template
-├── static/               # Static files (CSS, JS, images)
-├── utils/                # Utility functions for handling queries, embeddings, etc.
-└── README.md             # This documentation
-
-
-
-MEDICAL_RAG/
+**MEDICAL_RAG**/
 ├── data/
 │   └── medical_faqs.json   # JSON data file
 ├── templates/
