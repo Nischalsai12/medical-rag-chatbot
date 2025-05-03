@@ -1,156 +1,71 @@
-WHO Medical RAG Chatbot
-Project Overview
-The WHO Medical RAG Chatbot is an AI-based medical knowledge retrieval system designed to answer healthcare-related queries using a Retrieval-Augmented Generation (RAG) model. The chatbot fetches relevant answers from WHO,CDC & PUBMed's FAQ dataset, generates contextually appropriate responses, and provides additional helpful data such as relevant FAQs and memory usage statistics.
+# Healthcare & Medical Knowledge Retrieval-Augmented Generation (RAG) Chatbot
 
-Key Features:
-Medical Knowledge Base: Retrieves and generates responses from WHO,CDC & PUBMed's medical FAQ dataset.
+A Retrieval-Augmented Generation (RAG) chatbot for healthcare and medical knowledge retrieval, leveraging open-source LLMs (LLaMA-3, Mistral-7B, Phi-3) and semantic search for accurate, context-aware answers. This system aids in answering clinical, research, and healthcare-related questions.
 
-Model Flexibility: Allows users to select different pre-trained language models such as DistilGPT-2, MiniLm, GPT-2 and Phi-2.
+---
 
-FAQ Retrieval: Fetches the most relevant FAQs to help generate more accurate and reliable answers.
+## Table of Contents
+1. [Project Overview](#project-overview)
+2. [Features](#features)
+3. [System Architecture](#system-architecture)
+4. [Project Structure](#project-structure)
+5. [Installation & Setup](#installation--setup)
+6. [Usage Guide](#usage-guide)
+7. [Evaluation & Results](#evaluation--results)
+8. [Troubleshooting](#troubleshooting)
+9. [Future Work](#future-work)
+10. [Credits & References](#credits--references)
 
-Response Evaluation: Provides evaluation metrics such as response length, word count, and memory statistics.
+---
 
-Web Interface: An intuitive web-based interface built using Flask for easy interaction with the chatbot.
+## Project Overview
 
-Prerequisites
-Before setting up the project, ensure you have the following installed on your system:
+**Domain:** Healthcare & Medical Knowledge Retrieval  
+**Corpus:** Medical research papers, clinical guidelines, health reports from PubMed, WHO, CDC  
+**Goal:** Retrieve relevant medical knowledge and generate accurate, user-friendly answers for clinical and healthcare queries.
 
-Python 3.8+ (Recommended: Python 3.8 or higher)
-pip (Python package installer)
-Flask (Web framework for the UI)
-Hugging Face Transformers (For large language model access)
-FAISS (For similarity search over FAQs)
-SentenceTransformers (For embedding FAQs)
+**Key Objectives:**
+- Automate responses to medical queries using up-to-date clinical information
+- Use RAG to combine semantic retrieval with LLM-based generation
+- Support multi-model architecture for flexibility and scalability
 
-Setup Instructions
-1. Clone the repository
-git clone https://github.com/your-repo/WHO-Medical-RAG-Chatbot.git
-cd WHO-Medical-RAG-Chatbot
+**Value Proposition:**
+- Enhances healthcare professionals' access to knowledge
+- Reduces response time in clinical decision-making
+- Provides evidence-based, accurate answers grounded in medical literature
 
-2. Create and activate a virtual environment
-python -m venv venv
-source venv/bin/activate  # Linux/macOS
-venv\Scripts\activate  # Windows
+---
 
-3. Install dependencies
-Install all required Python packages:
-pip install -r requirements.txt
+## Features
+- **Retrieval-Augmented Generation:** Combines semantic search (Sentence-BERT + FAISS) with LLMs for grounded medical answers
+- **Multiple LLMs Supported:** LLaMA-3, Mistral-7B, Phi-3 (selectable based on performance and resource requirements)
+- **Multilingual:** English, Spanish, French (automatic translation of queries and responses)
+- **Medical Focus:** Tailored for clinical and research queries, leveraging authoritative sources like PubMed and WHO
+- **Web Interface:** Streamlit-based, with chat history, query input, and configuration options
+- **Performance Metrics:** Real-time display of retrieval/generation times, memory usage, and model performance
+- **User Feedback:** Rate answers and provide feedback to improve system performance
+- **Sample Questions:** Quick testing with sample clinical queries and guidelines
+- **Resource Adaptation:** Supports both CPU and GPU configurations for various model sizes
 
-4. Run the Flask server
-Start the Flask server by running:
+---
 
-python app.py
-You can now access the chatbot by navigating to http://localhost:5000 in your web browser.
+## System Architecture
 
-Usage
-Web Interface
-The WHO Medical RAG Chatbot provides an easy-to-use web interface for interacting with the system.
+1. **User Query:** Entered via web interface (e.g., "What is the treatment for diabetes?")
+2. **Preprocessing:** Clean, translate, and augment query if needed
+3. **Embedding & Retrieval:** Query embedded using Sentence-BERT, similar research papers or guidelines retrieved from FAISS index
+4. **Context Construction:** Top retrievals are used as context for the LLM model
+5. **Response Generation:** LLM generates a response based on the context and query
+6. **Display & Feedback:** Response shown to the user along with the source, and feedback is collected for system improvement
 
-Model Selection:
+**Main Components:**
+- Data Processing (`src/data_processing.py`)
+- Embedding & Retrieval (`src/embedding.py`)
+- LLM Response Generation (`src/llm_response.py`)
+- Utilities & Evaluation (`src/utils.py`)
+- Web Interface (`app.py`)
 
-Select the desired model from the dropdown list:
+---
 
-DistilGPT-2: A smaller and faster model suitable for low-memory systems.
-GPT-2: A powerful, versatile model, but demands more memory and processing power.
-all-MiniLM-L12-v2: A fast, lightweight model designed for efficiency with minimal resource requirements.
-Phi-2: Another high-performing model offering more nuanced outputs.
+## Project Structure
 
-Query Input:
-
-Type a medical query in the text box (e.g., "What are the symptoms of COVID-19?").
-Press the Submit button to send the query to the system.
-
-Response Display:
-
-After processing the query, the system will display the response generated by the selected model, including:
-
-The model's response to the query.
-A list of relevant FAQs that were retrieved for generating the response.
-
-Evaluation metrics such as the response length and word count.
-Memory stats detailing memory usage during query processing.
-
-Model Selection
-The chatbot supports multiple pre-trained models for response generation. Users can choose from the following:
-
-DistilGPT-2:
-A distilled version of GPT-2 designed for faster performance with lower resource usage.
-Suitable for systems with limited memory or less powerful hardware.
-
-all-MiniLM-L12-v2: 
-A distilled sentence embedding model optimized for fast semantic similarity computation in retrieval tasks.
-
-GPT-2: 
-OpenAI's foundational 124M-1.5B parameter autoregressive model balancing generation quality and computational efficiency.
-
-Phi-2:
-A model designed for specialized tasks with enhanced response capabilities.
-Best used in systems with substantial computational resources.
-
-Evaluation Metrics
-The chatbot provides several evaluation metrics for both the response quality and system performance:
-
-Response Length: The total number of characters in the generated response.
-Word Count: The total number of words in the generated response.
-
-Relevance: The similarity between the user's query and the FAQ entries retrieved. This is expressed as a percentage.
-
-Memory Stats: Displays memory usage during query processing, including the total memory used and peak memory consumption.
-
-These metrics help in analyzing and improving the chatbot's performance over time.
-
-Performance Optimization
-To optimize the chatbot's performance, consider the following tips:
-
-Use Lightweight Models for Low-Resource Systems: If you're running the chatbot on a system with limited resources, use smaller models like DistilGPT-2 or Phi-2.
-
-Preload Embeddings: Load FAQ embeddings at the start of the application to reduce query processing time.
-
-Cache Frequently Asked Queries: If you expect repeated queries, consider caching responses to improve speed.
-
-Use Efficient Query Handling: Avoid loading the model and embeddings on every request. Initialize them once during startup.
-
-Scalability
-The system is designed to scale to handle large numbers of queries by:
-
-Storing FAQ embeddings and query results in a database or memory cache.
-
-Allowing model selection to tailor the system to different hardware configurations.
-
-Supporting multilingual capabilities for users in various regions (expandable for additional languages like Spanish, French, etc.).
-
-To handle very large datasets (e.g., 10,000+ FAQs), consider using a distributed architecture or offloading certain tasks to external services.
-
-Troubleshooting
-Common Issues and Solutions:
-Error: "Out of Memory":
-
-Solution: Switch to a smaller model like DistilGPT-2 or Phi-2. Ensure that swap space is enabled on systems with lower memory.
-
-Slow Responses:
-
-Solution: Preload embeddings at the start to reduce retrieval time. Ensure you're using an optimized model based on your system's resources.
-
-Model Loading Issues:
-
-Solution: Ensure that you have an internet connection to download the necessary models and datasets. If models are not loading, try manually downloading them from HuggingFace.
-
-Incorrect Responses:
-
-Solution: Check if the FAQ dataset is up-to-date and contains relevant entries. You can also fine-tune the models with additional medical data for improved results.
-
-Project Structure
-
-**MEDICAL_RAG**/
-├── data/
-│   └── medical_faqs.json   # JSON data file
-├── templates/
-│   └── index.html          # Web interface HTML template
-├── venv/                   # Virtual environment folder
-│   ├── lib/                # Libraries
-│   ├── scripts/            # Scripts
-│   ├── share/              # Shared files
-│   └── pyvenv.cfg          # Virtual environment configuration
-├── chatbot.py              # Core chatbot functionality
-└── README.md               # Documentation
