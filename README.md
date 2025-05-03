@@ -68,9 +68,23 @@ A Retrieval-Augmented Generation (RAG) chatbot for healthcare and medical knowle
 ---
 
 ## Project Structure
+
 healthcare-medical-rag-chatbot/
 ├── app.py # Main Streamlit app
 ├── requirements.txt # Python dependencies
+├── README.md # User documentation manual
+├── data/ # Medical datasets (CSV, JSON)
+├── src/ # Source code modules
+│ ├── data_processing.py # Data loading, cleaning, augmentation
+│ ├── embedding.py # Embedding generation, FAISS retrieval
+│ ├── llm_response.py # LLM loading, prompt generation
+│ ├── utils.py # Evaluation, metrics, memory utils
+│ └── init.py
+├── embeddings/ # Persisted embedding model/index
+├── docs/ # Project documentation (reports, guides)
+├── venv/ # Python virtual environment
+
+
 ---
 
 ## Installation & Setup
@@ -88,50 +102,17 @@ healthcare-medical-rag-chatbot/
    ```bash
    git clone https://github.com/your-repo/healthcare-medical-rag-chatbot.git
    cd healthcare-medical-rag-chatbot
-
-Create and Activate a Virtual Environment
-
+   
+2.**Create and Activate a Virtual Environment**
 Linux/macOS:
-
-bash
-Copy
-Edit
 python -m venv venv
 source venv/bin/activate
 Windows:
-
-bash
-Copy
-Edit
 python -m venv venv
 venv\Scripts\activate
+
+2.**Install Dependencies**
 Install Dependencies
-
-bash
-Copy
-Edit
-pip install -r requirements.txt
-(Optional) Download NLTK Resources
-
-bash
-Copy
-Edit
-python -c "import nltk; nltk.download('punkt'); nltk.download('averaged_perceptron_tagger')"
-(Optional) Add Swap Space (Linux, for low memory systems)
-
-bash
-Copy
-Edit
-sudo fallocate -l 4G /swapfile
-sudo chmod 600 /swapfile
-sudo mkswap /swapfile
-sudo swapon /swapfile
-Running the Application
-bash
-Copy
-Edit
-streamlit run app.py
-Access the web interface at http://localhost:8501.
 
 Usage Guide
 Interface Overview
@@ -265,28 +246,5 @@ PubMed, WHO guidelines, CDC for medical datasets
 
 See comprehensive-project-report.md for full citations
 
-pgsql
-Copy
-Edit
 
-This `README.md` is tailored for your **Healthcare & Medical Knowledge RAG Chatbot** project, including the necessary components, system architecture, and usage instructions. It covers the deployment, running instructions, and detailed evaluation results of the RAG chatbot. You can further customize it based on your specific project setup or any other details you'd like to add.
-
-
-
-
-
-
-
-├── README.md # User documentation manual
-├── data/ # Medical datasets (CSV, JSON)
-├── src/ # Source code modules
-│ ├── data_processing.py # Data loading, cleaning, augmentation
-│ ├── embedding.py # Embedding generation, FAISS retrieval
-│ ├── llm_response.py # LLM loading, prompt generation
-│ ├── utils.py # Evaluation, metrics, memory utils
-│ └── init.py
-├── embeddings/ # Persisted embedding model/index
-├── docs/ # Project documentation (reports, guides)
-├── venv/ # Python virtual environment
-
-
+Now the content flows naturally without separation after the **Project Structure** section.
