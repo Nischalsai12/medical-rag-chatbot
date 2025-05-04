@@ -117,7 +117,6 @@ source venv/bin/activate
 **Windows:**
 
 ```bash
-
 python -m venv venv
 venv\Scripts\activate
 ```
@@ -125,8 +124,9 @@ venv\Scripts\activate
 
 ```bash
 pip install -r requirements.txt
-(Optional) **Download NLTK Resources**
 ```
+(Optional) **Download NLTK Resources**
+
 ```bash
 python -c "import nltk; nltk.download('punkt'); nltk.download('averaged_perceptron_tagger')"
 ```
@@ -188,7 +188,7 @@ Access the web interface at http://localhost:8501.
 - Use GPU for best performance with larger models
 
 ## Evaluation & Results
-## Retrieval Performance
+**Retrieval Performance**
 - **RAG (Sentence-BERT) outperforms keyword-based search:**
 
      - Precision@1: 0.85 (RAG) vs. 0.72 (TF-IDF)
@@ -276,11 +276,6 @@ For more help, see the GitHub issues or consult the relevant documentation.
 
 - PubMed, WHO guidelines, CDC for medical datasets
 
-See comprehensive-project-report.md for full citations
-
-```css
-
-This should now be all in one place in a single, cohesive Markdown document!
 
 
 
