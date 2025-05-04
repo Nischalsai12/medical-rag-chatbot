@@ -1,6 +1,6 @@
 # Healthcare & Medical Knowledge Retrieval-Augmented Generation (RAG) Chatbot
 
-A Retrieval-Augmented Generation (RAG) chatbot for healthcare and medical knowledge retrieval, leveraging open-source LLMs (LLaMA-3, Mistral-7B, Phi-3) and semantic search for accurate, context-aware answers. This system aids in answering clinical, research, and healthcare-related questions.
+A Retrieval-Augmented Generation (RAG) chatbot for healthcare and medical knowledge retrieval, leveraging open-source LLMs (Distillgpt2, Gpt2, Phi2) and semantic search for accurate, context-aware answers. This system aids in answering clinical, research, and healthcare-related questions.
 
 ---
 
