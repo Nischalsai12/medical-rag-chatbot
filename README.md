@@ -68,7 +68,7 @@ A Retrieval-Augmented Generation (RAG) chatbot for healthcare and medical knowle
 ---
 
 ## Project Structure
-
+```
 healthcare-medical-rag-chatbot/
 ├── app.py # Main Streamlit app
 ├── requirements.txt # Python dependencies
@@ -83,6 +83,8 @@ healthcare-medical-rag-chatbot/
 ├── embeddings/ # Persisted embedding model/index
 ├── docs/ # Project documentation (reports, guides)
 ├── venv/ # Python virtual environment
+```
+
 
 
 ---
@@ -102,149 +104,188 @@ healthcare-medical-rag-chatbot/
    ```bash
    git clone https://github.com/your-repo/healthcare-medical-rag-chatbot.git
    cd healthcare-medical-rag-chatbot
-   
-2.**Create and Activate a Virtual Environment**
-Linux/macOS:
+
+**Create and Activate a Virtual Environment**
+
+**Linux/macOS:**
+
+```bash
+
 python -m venv venv
 source venv/bin/activate
-Windows:
+```
+**Windows:**
+
+```bash
+
 python -m venv venv
 venv\Scripts\activate
+```
+**Install Dependencies**
 
-2.**Install Dependencies**
-Install Dependencies
+```bash
+pip install -r requirements.txt
+(Optional) **Download NLTK Resources**
+```
+```bash
+python -c "import nltk; nltk.download('punkt'); nltk.download('averaged_perceptron_tagger')"
+```
+(Optional) **Add Swap Space (Linux, for low memory systems)**
 
-Usage Guide
-Interface Overview
-Main Chat Area: Interact with the chatbot to ask medical queries
+```bash
+sudo fallocate -l 4G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+```
+**Running the Application**
+```bash
+python chatbot.py
+```
+Access the web interface at http://localhost:8501.
 
-Retrieved Information: See the research papers or clinical guidelines used for the answer
+## Usage Guide
+**Interface Overview**
+- **Main Chat Area:** Interact with the chatbot to ask medical queries
 
-Configuration Sidebar: Select model, language, and other settings
+- **Retrieved Information:** See the research papers or clinical guidelines used for the answer
 
-Sample Questions: Click to test common clinical and healthcare-related queries
+- **Configuration Sidebar:** Select model, language, and other settings
 
-Performance Metrics: View retrieval/generation times and memory usage
+- **Sample Questions:** Click to test common clinical and healthcare-related queries
 
-Feedback: Rate responses and leave comments for improvements
+- **Performance Metrics:** View retrieval/generation times and memory usage
 
-Configuration Options
-Dataset Source: PubMed, WHO guidelines, local CSV/JSON
+- **Feedback:** Rate responses and leave comments for improvements
 
-FAQ Augmentation: Enable paraphrasing for better query handling
+## Configuration Options
+- **Dataset Source:** PubMed, WHO guidelines, local CSV/JSON
 
-Language: English, Spanish, French
+- **FAQ Augmentation:** Enable paraphrasing for better query handling
 
-LLM Model: LLaMA-3 (balanced), Mistral-7B (highest quality), Phi-3 (faster, less resource-intensive)
+- **Language:** English, Spanish, French
 
-Memory Usage Display: See current RAM/VRAM utilization
+- **LLM Model:** LLaMA-3 (balanced), Mistral-7B (highest quality), Phi-3 (faster, less resource-intensive)
 
-Interacting with the Chatbot
-Type a medical query (e.g., "What is the best treatment for hypertension?")
+- **Memory Usage Display:** See current RAM/VRAM utilization
 
-View the chatbot's response and the relevant literature used to generate it
+## Interacting with the Chatbot
+**1.** Type a medical query (e.g., "What is the best treatment for hypertension?")
 
-Rate the answer (1-5) and leave feedback if needed
+**2.** View the chatbot's response and the relevant literature used to generate it
 
-Test with sample questions for fast demonstration of functionality
+**3.** Rate the answer (1-5) and leave feedback if needed
 
-Performance Tips
-Use Mistral-7B for detailed answers and deep medical knowledge
+**4.** Test with sample questions for fast demonstration of functionality
 
-Use LLaMA-3 for balance between performance and resource usage
+## Performance Tips
+- Use Mistral-7B for detailed answers and deep medical knowledge
 
-Preload embeddings for faster responses
+- Use LLaMA-3 for balance between performance and resource usage
 
-Use GPU for best performance with larger models
+- Preload embeddings for faster responses
 
-Evaluation & Results
-Retrieval Performance
-RAG (Sentence-BERT) outperforms keyword-based search:
+- Use GPU for best performance with larger models
 
-Precision@1: 0.85 (RAG) vs. 0.72 (TF-IDF)
+## Evaluation & Results
+## Retrieval Performance
+- **RAG (Sentence-BERT) outperforms keyword-based search:**
 
-Recall@3: 0.80 (RAG) vs. 0.65 (TF-IDF)
+     - Precision@1: 0.85 (RAG) vs. 0.72 (TF-IDF)
 
-Dense embeddings handle clinical and research queries with high relevance and accuracy
+     - Recall@3: 0.80 (RAG) vs. 0.65 (TF-IDF)
 
-Response Quality
-BLEU/ROUGE-L/Word Overlap: RAG+LLM consistently outperforms baselines
+- Dense embeddings handle clinical and research queries with high relevance and accuracy
 
-Human Ratings: 4.5/5 (Phi-3+RAG), 4.2/5 (LLaMA-3+RAG), 4.7/5 (Mistral-7B+RAG)
+## Response Quality
+- **BLEU/ROUGE-L/Word Overlap:** RAG+LLM consistently outperforms baselines
 
-Multilingual: Maintains ~90% of English performance in Spanish/French medical queries
+- **Human Ratings:** 4.5/5 (Phi-3+RAG), 4.2/5 (LLaMA-3+RAG), 4.7/5 (Mistral-7B+RAG)
 
-System Performance
-Retrieval time: ~0.02s (FAISS)
+- **Multilingual:** Maintains ~90% of English performance in Spanish/French medical queries
 
-Generation time: 2-5s (GPU), 15-60s (CPU, large models)
+## System Performance
+**Retrieval time:** ~0.02s (FAISS)
 
-Memory usage: 3-32GB RAM depending on model
+**Generation time:** 2-5s (GPU), 15-60s (CPU, large models)
 
-Troubleshooting
-Out of Memory Errors:
+**Memory usage:** 3-32GB RAM depending on model
 
-Switch to LLaMA-3 or Phi-3 for smaller memory footprint
+## Troubleshooting
+**Out of Memory Errors:**
 
-Disable FAQ augmentation
+- Switch to LLaMA-3 or Phi-3 for smaller memory footprint
 
-Add swap space
+- Disable FAQ augmentation
 
-Reduce embedding batch size
+- Add swap space
 
-Slow Response Time:
+- Reduce embedding batch size
 
-Use LLaMA-3 or Phi-3 for better efficiency
+**Slow Response Time:**
 
-Preload embeddings for faster retrieval
+- Use LLaMA-3 or Phi-3 for better efficiency
 
-Use GPU for optimal performance with larger models
+- Preload embeddings for faster retrieval
 
-Model Loading Failures:
+- Use GPU for optimal performance with larger models
 
-Ensure proper internet connection for downloading models
+**Model Loading Failures:**
 
-Check available disk space
+- Ensure proper internet connection for downloading models
 
-Update the transformers library if needed
+- Check available disk space
 
-CUDA Errors:
+- Update the transformers library if needed
 
-Ensure GPU drivers are up to date
+**CUDA Errors:**
 
-Check CUDA compatibility with installed libraries
+- Ensure GPU drivers are up to date
 
-Set CUDA_VISIBLE_DEVICES=0 if using multiple GPUs
+- Check CUDA compatibility with installed libraries
+
+- Set CUDA_VISIBLE_DEVICES=0 if using multiple GPUs
 
 For more help, see the GitHub issues or consult the relevant documentation.
 
-Future Work
-Hybrid Retrieval: Integrate sparse search techniques (e.g., BM25) for improved precision
+## Future Work
+**Hybrid Retrieval:** Integrate sparse search techniques (e.g., BM25) for improved precision
 
-Model Fine-tuning: Train domain-specific LLMs with clinical data
+**Model Fine-tuning:** Train domain-specific LLMs with clinical data
 
-Multi-turn Conversations: Handle back-and-forth exchanges for more complex queries
+**Multi-turn Conversations:** Handle back-and-forth exchanges for more complex queries
 
-Integration with EHR Systems: Automate data extraction from Electronic Health Records
+**Integration with EHR Systems:** Automate data extraction from Electronic Health Records
 
-Scaling: Optimize for cloud deployment, microservices, and health data security
+**Scaling:** Optimize for cloud deployment, microservices, and health data security
 
-User Feedback Loop: Incorporate feedback to continuously improve system performance
+**User Feedback Loop:** Incorporate feedback to continuously improve system performance
 
-Credits & References
-Team:
+## Credits & References
+**Team:**
 
-Nischal, Nitish, Kavya, Dasari Venkata Sai Aditya Nischal
+- Nitish Adla
+- Kavya Rampalli
+- Sai Nischal Dasari
+  
+**Key References:**
 
-Key References:
+- Lewis et al. (2020) "Retrieval-augmented generation for knowledge-intensive NLP tasks"
 
-Lewis et al. (2020) "Retrieval-augmented generation for knowledge-intensive NLP tasks"
+- Reimers & Gurevych (2019) "Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks"
 
-Reimers & Gurevych (2019) "Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks"
-
-PubMed, WHO guidelines, CDC for medical datasets
+- PubMed, WHO guidelines, CDC for medical datasets
 
 See comprehensive-project-report.md for full citations
 
+```css
 
-Now the content flows naturally without separation after the **Project Structure** section.
+This should now be all in one place in a single, cohesive Markdown document!
+
+
+
+
+
+
+
+
